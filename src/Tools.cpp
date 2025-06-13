@@ -129,29 +129,29 @@ bool repoEnabled(QString const &repo) {
 bool disableRepos(QStringList const &repos) {
 	QString cmd;
 	QStringList args;
-	if(access(QFile::encodeName("/etc/yum.repos.d/openmandriva-cooker-" + rpmArch() + ".repo"), W_OK)) {
+	if(access(QFile::encodeName("/etc/dnf/repos.override.d/99-config_manager.repo"), W_OK)) {
 		cmd="/usr/bin/pkexec";
 		args << "/usr/bin/dnf";
 	} else {
 		cmd="/usr/bin/dnf";
 	}
-	args << "config-manager" << "--set-disabled" << repos;
-# FIXME
-# args << "config-manager" << "setopt" << (repos + ".enabled=0");
+	args << "config-manager" << "setopt";
+	for(QString const &repo : repos)
+		args << (repo + ".enabled=0");
 	return QProcess::execute(cmd, args) == 0;
 }
 
 bool enableRepos(QStringList const &repos) {
 	QString cmd;
 	QStringList args;
-	if(access(QFile::encodeName("/etc/yum.repos.d/openmandriva-cooker-" + rpmArch() + ".repo"), W_OK)) {
+	if(access(QFile::encodeName("/etc/dnf/repos.override.d/99-config_manager.repo"), W_OK)) {
 		cmd="/usr/bin/pkexec";
 		args << "/usr/bin/dnf";
 	} else {
 		cmd="/usr/bin/dnf";
 	}
-	args << "config-manager" << "--set-enabled" << repos;
-# FIXME
-# args << "config-manager" << "setopt" << (repos + ".enabled=1");
+	args << "config-manager" << "setopt";
+	for(QString const &repo : repos)
+		args << (repo + ".enabled=1");
 	return QProcess::execute(cmd, args) == 0;
 }
