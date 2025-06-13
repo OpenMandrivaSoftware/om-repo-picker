@@ -136,6 +136,8 @@ bool disableRepos(QStringList const &repos) {
 		cmd="/usr/bin/dnf";
 	}
 	args << "config-manager" << "--set-disabled" << repos;
+# FIXME
+# args << "config-manager" << "setopt" << (repos + ".enabled=0");
 	return QProcess::execute(cmd, args) == 0;
 }
 
@@ -149,5 +151,7 @@ bool enableRepos(QStringList const &repos) {
 		cmd="/usr/bin/dnf";
 	}
 	args << "config-manager" << "--set-enabled" << repos;
+# FIXME
+# args << "config-manager" << "setopt" << (repos + ".enabled=1");
 	return QProcess::execute(cmd, args) == 0;
 }
