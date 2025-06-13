@@ -74,25 +74,9 @@ int currentUpdateChannel() {
 		return cachedUpdateChannel;
 
 	for(int i=0; updateChannels[i].name; i++) {
-		QProcess p;
-		p.setProgram("/usr/bin/dnf");
-		p.setArguments(QStringList() << "config-manager" << "--dump" << (QString(updateChannels[i].name) + "-" + rpmArch()));
-		p.start(QIODevice::ReadOnly);
-		p.setReadChannel(QProcess::StandardOutput);
-		p.waitForFinished();
-		while(p.canReadLine()) {
-			QByteArray b = p.readLine(256).trimmed();
-			if(b.startsWith("enabled =")) {
-				if(b.endsWith("1")) {
-					// That's the one...
-					cachedUpdateChannel = i;
-					return i;
-				} else {
-					// It's disabled, so we don't have to bother reading the
-					// rest of dnf config-manager
-					break;
-				}
-			}
+		if(repoEnabled(repoName(0, i))) {
+			cachedUpdateChannel = i;
+			return i;
 		}
 	}
 	return 0;
@@ -114,14 +98,14 @@ QString repoName(int repo, int updateChannel, QString const &arch, QString const
 bool repoEnabled(QString const &repo) {
 	QProcess p;
 	p.setProgram("/usr/bin/dnf");
-	p.setArguments(QStringList() << "config-manager" << "--dump" << repo);
+	p.setArguments(QStringList() << "repolist" << "--enabled" << repo);
 	p.start(QIODevice::ReadOnly);
 	p.setReadChannel(QProcess::StandardOutput);
 	p.waitForFinished();
 	while(p.canReadLine()) {
-		QByteArray b = p.readLine(256).trimmed();
-		if(b.startsWith("enabled ="))
-			return b.endsWith("1");
+		QByteArray b = p.readLine(256).split(' ')[0];
+		if(!b.isEmpty())
+			return true;
 	}
 	return false;
 }
