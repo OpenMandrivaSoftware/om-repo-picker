@@ -23,6 +23,7 @@ remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui Widgets LinguistTools)
 
 add_subdirectory(src)
+add_subdirectory(cli)
 add_subdirectory(desktop)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

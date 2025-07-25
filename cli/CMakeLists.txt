@@ -1,0 +1,5 @@
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/enable-repo" ENABLE_REPO)
+string(REPLACE "enabled=1" "enabled=0" ENABLE_REPO "${ENABLE_REPO}")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/disable-repo" "${ENABLE_REPO}")
+install(PROGRAMS enable-repo DESTINATION bin)
+install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/disable-repo" DESTINATION bin)
