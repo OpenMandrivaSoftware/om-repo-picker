@@ -58,7 +58,7 @@
     <message>
         <location filename="../src/UpdateChannelPicker.cpp" line="8"/>
         <source>U&amp;pdate channel</source>
-        <translation>Canale di aggiornamento</translation>
+        <translation>Aggiorna il canale</translation>
     </message>
     <message>
         <location filename="../src/UpdateChannelPicker.cpp" line="10"/>
