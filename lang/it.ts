@@ -63,7 +63,7 @@
     <message>
         <location filename="../src/UpdateChannelPicker.cpp" line="10"/>
         <source>&amp;Update channel:</source>
-        <translation>Aggio&amp;rna il canale:</translation>
+        <translation>Canale di aggiornamento:</translation>
     </message>
     <message>
         <location filename="../src/UpdateChannelPicker.cpp" line="20"/>
